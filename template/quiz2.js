@@ -1,6 +1,27 @@
+$(document).ready(function(){
+    var cookie1 = document.cookie;
+    var y = cookie1.split(';');
+    $("#lis").append(y[0]);
+});
+
 function myFunction(){
-	// $timeout.fadeIn('slow');	
+	$("#lis").empty();
+	var url = "http://www.mattbowytz.com/simple_api.json";	
+	$.getJSON(url + '?data=quizData', function(data){
+		var random = Math.floor((Math.random() * data.data.length));
+		$("#lis").append(data.data[random]);	
+		$("#change").attr("value", "Change It");
+		$("#keep").fadeIn('slow');
+		return;
+	});
+	return false;
 }
+
+function myCookie(value){
+	document.cookie="state="+value;
+	return false;
+}
+
 (function($){
 	// This is where you will write your function for the programming challenge
 	// Do not commit console.log statements
@@ -27,10 +48,10 @@ function myFunction(){
 	$sub.on('submit', function(e) {
 		e.preventDefault();
 		if ($(this).find('input[type="text"]').val() !== '') {
-			$(this).find('input').foreach(function() {
-				$(this).fadeout('slow');
+			$(this).find('input').each(function() {
+				$(this).fadeOut('slow');
 			});
-			$(this).appendwith('<h2>Congratulations! You\'ve entered some text!</h2>');
+			$(this).append('<h2>Congratulations! You\'ve entered some text!</h2>');
 		}
 	})
 
@@ -39,5 +60,7 @@ function myFunction(){
 			$timeout.fadeIn('slow');
 		}, 1000);
 	});
+
+
 
 })(jQuery);
